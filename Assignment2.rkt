@@ -51,9 +51,9 @@
     [(ifleq0C a b c) (string-append (LCToPython b) " if " (LCToPython a) " <= 0 else " (LCToPython c))]
     [(println p)(string-append "print(" (LCToPython p) ")")]))
 
-(sToPython '2)
-(sToPython '(ifleq0 -2 (+ 2 3) -20))
-(sToPython '((/ x => (+ x 14)) 4))
-(sToPython '(println 4))
-(sToPython '((/ x => (* x 5)) 4))
-(sToPython '((((/ x => (/ y => (/ z => (* x (+ y z))))) 4 ) 3) 2))
+(check-equal? (sToPython '2) "2")
+(check-equal? (sToPython '(ifleq0 -2 (+ 2 3) -20)) "(2 + 3) if -2 <= 0 else -20")
+(check-equal? (sToPython '((/ x => (+ x 14)) 4)) "(lambda x: (x + 14))(4)")
+(check-equal? (sToPython '(println 4)) "print(4)")
+(check-equal? (sToPython '((/ x => (* x 5)) 4)) "(lambda x: (x * 5))(4)")
+(check-equal? (sToPython '((((/ x => (/ y => (/ z => (* x (+ y z))))) 4 ) 3) 2)) "(lambda x: (lambda y: (lambda z: (x * (y + z)))))(4)(3)(2)")
